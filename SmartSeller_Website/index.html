@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartSeller</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+</head>
+<body class="bg-light-c">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">    
+             <a class="navbar-brand" href="#">
+                <span>Smart</span><span class="seller">Seller</span> 
+             </a>  
+             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">  
+                 <span class="navbar-toggler-icon"></span>  
+             </button>  
+
+             <!-- <div class="collapse navbar-collapse" id="navbarNav">  
+                 <ul class="navbar-nav">  
+                     <li class="nav-item">  
+                         <a class="nav-link active" aria-current="page" href="#">Home</a>  
+                     </li>  
+                     <li class="nav-item">  
+                         <a class="nav-link" href="#">Features</a>  
+                     </li>  
+                     <li class="nav-item">  
+                         <a class="nav-link" href="#">Pricing</a>  
+                     </li>  
+                     <li class="nav-item">  
+                         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>  
+                     </li>  
+                 </ul>  
+             </div>     -->
+        </div>
+    </nav>
+    
+<div class="container my-4">
+    
+    <form>
+        <div class="row mb-4">
+            <!-- Product Filter Section -->
+            <div class="col-md-4 filter-section bg-light-green">
+                <div class="section-header">محصول</div>
+                <div class="mb-3">
+                    <label class="form-label">دسته بندی کالاها</label>
+                    <select class="form-select">
+                        <option>همه دسته بندی ها</option>
+                        <option>دسته 1</option>
+                        <option>دسته 2</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">تعداد امتیاز دهنده</label>
+                    <input type="number" class="form-control" placeholder="کمترین تا بیشترین">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">میزان امتیاز</label>
+                    <input type="number" class="form-control" placeholder="کمترین تا بیشترین">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">اندازه محصول</label>
+                    <input type="text" class="form-control" placeholder="کمترین تا بیشترین">
+                </div>
+                <!-- Add more product filters here -->
+            </div>
+            
+            <!-- Competitor Filter Section -->
+            <div class="col-md-4 filter-section bg-primary text-white">
+                <div class="section-header">رقبا</div>
+                <div class="mb-3">
+                    <label class="form-label">تعداد رقبا</label>
+                    <input type="number" class="form-control" placeholder="کمترین تا بیشترین">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">تعداد پرسش ها</label>
+                    <input type="number" class="form-control" placeholder="کمترین تا بیشترین">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">تعداد نظرات</label>
+                    <input type="number" class="form-control" placeholder="کمترین تا بیشترین">
+                </div>
+                <!-- Add more competitor filters here -->
+            </div>
+            
+            <!-- Sales Filter Section -->
+            <div class="col-md-4 filter-section bg-secondary text-white">
+                <div class="section-header">فروش</div>
+                <div class="mb-3">
+                    <label class="form-label">قیمت برنده</label>
+                    <input type="number" class="form-control" placeholder="کمترین تا بیشترین">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">فروش تخمینی</label>
+                    <input type="number" class="form-control" placeholder="کمترین تا بیشترین">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">میزان تغییرات قیمت</label>
+                    <input type="range" class="form-range">
+                </div>
+                <!-- Add more sales filters here -->
+            </div>
+        </div>
+        
+        <!-- Search Button -->
+        <div class="row search-button">
+            <div class="col-12 text-center">
+                <button type="submit" class="btn btn-primary">جستجو</button>
+                <button type="reset" class="btn btn-outline-secondary">پاک کردن فیلترها</button>
+            </div>
+        </div>
+    </form>
+    
+    <!-- Results Table -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>نام محصول</th>
+                        <th>دسته بندی</th>
+                        <th>قیمت</th>
+                        <th>امتیاز</th>
+                        <th>رقبا</th>
+                        <!-- Add more columns as needed -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Results will be populated here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

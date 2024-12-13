@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filterable Product Table</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        #productTable {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-4">
+        <h2>Filter Products</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <label for="productCategory" class="form-label">Product Category</label>
+                <select id="productCategory" class="form-select">
+                    <option value="All">All</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Clothing">Clothing</option>
+                    <option value="Home Appliances">Home Appliances</option>
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label for="salesAmountRange" class="form-label">Sales Amount Range</label>
+                <input type="number" id="salesMin" class="form-control" placeholder="Min Sales" min="0">
+                <input type="number" id="salesMax" class="form-control mt-2" placeholder="Max Sales" min="0">
+            </div>
+
+            <div class="col-md-4">
+                <label for="priceRange" class="form-label">Price Range</label>
+                <input type="range" id="priceRange" class="form-range" min="100" max="10000" step="100">
+                <span id="priceRangeValue">$100</span>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <button class="btn btn-primary" onclick="filterProducts()">Search</button>
+        </div>
+
+        <table id="productTable" class="table table-bordered table-striped mt-4">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Product Category</th>
+                    <th>Sales Amount</th>
+                    <th>Product Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Mock data rows -->
+                <tr data-category="Electronics" data-sales="150" data-price="1200">
+                    <td>Smartphone</td>
+                    <td>Electronics</td>
+                    <td>150</td>
+                    <td>$1200</td>
+                </tr>
+                <tr data-category="Clothing" data-sales="300" data-price="80">
+                    <td>T-Shirt</td>
+                    <td>Clothing</td>
+                    <td>300</td>
+                    <td>$80</td>
+                </tr>
+                <tr data-category="Home Appliances" data-sales="90" data-price="500">
+                    <td>Microwave</td>
+                    <td>Home Appliances</td>
+                    <td>90</td>
+                    <td>$500</td>
+                </tr>
+                <tr data-category="Electronics" data-sales="70" data-price="2500">
+                    <td>Laptop</td>
+                    <td>Electronics</td>
+                    <td>70</td>
+                    <td>$2500</td>
+                </tr>
+                <tr data-category="Clothing" data-sales="50" data-price="150">
+                    <td>Jacket</td>
+                    <td>Clothing</td>
+                    <td>50</td>
+                    <td>$150</td>
+                </tr>
+                <tr data-category="Home Appliances" data-sales="120" data-price="300">
+                    <td>Blender</td>
+                    <td>Home Appliances</td>
+                    <td>120</td>
+                    <td>$300</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Update price range display
+        document.getElementById("priceRange").addEventListener("input", function () {
+            document.getElementById("priceRangeValue").innerText = `$${this.value}`;
+        });
+
+        function filterProducts() {
+            let category = document.getElementById("productCategory").value;
+            let salesMin = parseInt(document.getElementById("salesMin").value) || 0;
+            let salesMax = parseInt(document.getElementById("salesMax").value) || Infinity;
+            let priceRange = parseInt(document.getElementById("priceRange").value);
+
+            let table = document.getElementById("productTable");
+            let rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+
+            let isVisible = false;
+
+            for (let i = 0; i < rows.length; i++) {
+                let rowCategory = rows[i].getAttribute("data-category");
+                let rowSales = parseInt(rows[i].getAttribute("data-sales"));
+                let rowPrice = parseInt(rows[i].getAttribute("data-price"));
+
+                if (
+                    (category === "All" || rowCategory === category) &&
+                    rowSales >= salesMin &&
+                    rowSales <= salesMax &&
+                    rowPrice <= priceRange
+                ) {
+                    rows[i].style.display = "";
+                    isVisible = true;
+                } else {
+                    rows[i].style.display = "none";
+                }
+            }
+
+            table.style.display = isVisible ? "table" : "none";
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

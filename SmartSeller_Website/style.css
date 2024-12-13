@@ -1,0 +1,34 @@
+
+body .bg-light-c{
+    color: #F7F7F7;
+}
+
+.navbar-collapse {  
+    display: none !important;  
+}  
+.navbar-toggler {  
+    display: block !important;  
+}  
+
+.section-header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+.filter-section {
+    background-color: #f0f0f0;
+    padding: 1rem;
+    border-radius: 10px;
+}
+.search-button {
+    margin-top: 1rem;
+}
+/* Custom styles for the logo */
+.navbar-brand span {
+    color: #0B5395;
+    font-size: 2rem;
+    font-weight: bold;
+}
+.navbar-brand span.seller {
+    color: gray;
+}

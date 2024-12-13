@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filter Panel UI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Full page height setup */
+        body, html {
+            height: 95vh; /* Adjusted to 90vh as per requirement */
+            margin: 0;
+            background-color: #F7F7F7; /* Background color between sections */
+        }
+        .navbar-collapse {  
+            display: none !important;  
+        }  
+        .navbar-toggler {  
+            display: block !important;  
+        }  
+        .navbar-brand span {
+            color: #0B5395;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .navbar-brand span.seller {
+            color: gray;
+        }
+        
+        /* Competitors section styles */
+        #competitorsSection {
+            background-color: #0B5395;
+            height: calc((81vh - 2rem) * 3.5 / 6); /* Adjusted height with padding consideration */
+            border-radius: 15px; /* Smooth and curved corners */
+            padding: 0.5rem;
+            margin-bottom: 0.8rem; /* Space between Competitors and Sales */
+        }
+
+        /* Sales section styles */
+        #salesSection {
+            background-color: #e7e7e7;
+            height: calc((81vh - 2rem) * 2.6 / 6); /* Adjusted height with padding consideration */
+            border-radius: 15px; /* Smooth and curved corners */
+            padding: 0.5rem;
+        }
+
+        /* Product section styles */
+        #productSection {
+            background-color: #C9DA92;
+            height: calc(85vh - 2rem); /* Full height with padding consideration */
+            border-radius: 15px; /* Smooth and curved corners */
+            padding: 0.5rem;
+        }
+
+        /* Min, Till, Max input section */
+        .range-inputs {
+            display: flex;
+            align-items: center;
+        }
+
+        .range-inputs input {
+            width: 3rem; /* Adjust width as needed */
+            height: 1.5rem;
+            margin-right: 0.5rem;
+        }
+
+        .range-inputs span {
+            margin-right: 0.5rem;
+        }
+
+        /* Buttons styling */
+        .btn-search {
+            background-color: #0F6FC6;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.7rem;
+            margin-right: 1rem;
+            position: absolute;
+            bottom: 0.2rem;
+            left: 4rem;
+        }
+
+        .btn-clear {
+            background-color: transparent;
+            color: #0B5395;
+            border: 2px solid #0B5395;
+            padding: 0.5rem 0.6rem;
+            position: absolute;
+            bottom: 0.2rem;
+            left: 11rem;
+        }
+
+        #productSection .container{
+            height: 80%;
+        }
+        #productSection .container .cat-row{
+            padding: 0 1.5rem;
+        }
+        #productCategory{
+            width: 95%;
+        }
+        #productSection .container .cat-form{
+            width: 100%;
+            padding: 0 0 !important;
+        }
+        .cat-form .range-inputs .form-control{
+            width: 100%;
+        }
+        .cat-form-title{
+            font-size: 1rem;
+            color: white;
+        }
+        .cat-form-title-sales{
+            font-size: 1rem;
+            color: #0B5395;
+        }
+        .custom-placeholder::placeholder {  
+            font-size: 13px;  
+            color: #999; 
+        } 
+        .no-arrows {  
+        -moz-appearance: textfield;  
+    }  
+
+    .no-arrows::-webkit-inner-spin-button,  
+    .no-arrows::-webkit-outer-spin-button {  
+        -webkit-appearance: none;  
+        margin: 0;  
+    } 
+    /* Show table after filtering */
+    #productTable {
+        margin-top: 2rem;
+        display: none;
+    }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid px-5 py-0">    
+             <a class="navbar-brand" href="#">
+                <span>Smart</span><span class="seller">Seller</span> 
+             </a>  
+             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">  
+                 <span class="navbar-toggler-icon"></span>  
+             </button>  
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row px-5">
+            <div class="col-md-8">
+                <!-- Competitors section -->
+                <div id="competitorsSection">
+                    <h4 class="text-end p-3 text-white">رقبا</h4>
+                    <!-- Content for Competitors section -->
+                     <div class="row col-12 ">
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-8"><p class="cat-form-title px-3">امتیاز بهترین فروشنده</p></div>
+                            </div>
+                            <div class="row cat-form">
+                                <div class="col-7 mb-3">
+                                    <div class="range-inputs">
+                                        <input type="number" class="form-control no-arrows custom-placeholder" id="bestSellerMin" placeholder="کمترین">
+                                        <span>تا</span>
+                                        <input type="number" class="form-control no-arrows custom-placeholder" id="bestSellerMax" placeholder="بیشترین">
+                                    </div>
+                                </div>
+                                <div class="col-7">
+                                    <div class="range-inputs">
+                                        <input type="number" class="form-control" id="sellerType" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-5"><p class="cat-form-title">نوع ارسال</p></div>
+                                <div class="col-7">
+                                    <div class="range-inputs">
+                                        <input type="number" class="form-control" id="deliveryType" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-5"><p class="cat-form-title">نوع گارانتی</p></div>
+                                
+                            </div>
+                            <div class="form-check form-switch ">
+                                <input class="form-check-input" type="checkbox" id="authenticity">
+                                <label class="form-check-label text-white" for="authenticity">گواهی اصالت کالا</label>
+                            </div>
+                         </div>
+                         <div class="col-6 mt-5">
+                            <div class="row row-cols-2 cat-form">
+                                <div class="col-7">
+                                    <div class="range-inputs">
+                                        <input type="number" class="form-control no-arrows custom-placeholder" id="competitorsMin" placeholder="کمترین">
+                                        <span>تا</span>
+                                        <input type="number" class="form-control no-arrows custom-placeholder" id="competitorsMax" placeholder="بیشترین">
+                                    </div>
+                                </div>
+                                <div class="col-5"><p class="cat-form-title">تعداد  رقبا</p></div>
+                                <div class="col-7">
+                                    <div class="range-inputs">
+                                        <input type="number" class="form-control no-arrows custom-placeholder" id="reviewsMin" placeholder="کمترین">
+                                        <span>تا</span>
+                                        <input type="number" class="form-control no-arrows custom-placeholder" id="reviewsMax" placeholder="بیشترین">
+                                    </div>
+                                </div>
+                                <div class="col-5"><p class="cat-form-title">تعداد نظرات</p></div>
+                                <div class="col-7">
+                                    <div class="range-inputs">
+                                        <input type="number" class="form-control no-arrows custom-placeholder" id="questionsMin" placeholder="کمترین">
+                                        <span>تا</span>
+                                        <input type="number" class="form-control no-arrows custom-placeholder" id="questionsMax" placeholder="بیشترین">
+                                    </div>
+                                </div>
+                                <div class="col-5"><p class="cat-form-title">تعداد پرسش ها</p></div>
+                            </div>
+                         </div>
+                     </div>
+                     
+                </div>
+
+                <!-- Sales section -->
+                <div id="salesSection">
+                    <h4 class="text-end p-3">فروش</h4>
+                    <div class="row col-12 ">
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-8"><p class="cat-form-title-sales px-3">درصد تخفیف</p></div>
+                            </div>
+                            <div class="row cat-form">
+                                <div class="col-7 mb-3">
+                                    <div class="range-inputs">
+                                        <input type="number" class="form-control no-arrows custom-placeholder" id="discountMin" placeholder="کمترین">
+                                        <span>تا</span>
+                                        <input type="number" class="form-control no-arrows custom-placeholder" id="discountMax" placeholder="بیشترین">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row row-cols-2 cat-form">
+                                <div class="col-7">
+                                    <div class="range-inputs">
+                                        <input type="number" class="form-control no-arrows custom-placeholder" id="priceMin" placeholder="کمترین">
+                                        <span>تا</span>
+                                        <input type="number" class="form-control no-arrows custom-placeholder" id="priceMax" placeholder="بیشترین">
+                                    </div>
+                                </div>
+                                <div class="col-5"><p class="cat-form-title-sales">قیمت</p></div>
+                                <div class="col-7">
+                                    <div class="range-inputs">
+                                        <input type="number" class="form-control no-arrows custom-placeholder" id="salesMin" placeholder="کمترین">
+                                        <span>تا</span>
+                                        <input type="number" class="form-control no-arrows custom-placeholder" id="salesMax" placeholder="بیشترین">
+                                    </div>
+                                </div>
+                                <div class="col-5"><p class="cat-form-title-sales">فروش کل</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <!-- Product section -->
+                <div id="productSection">
+                    <h4 class="text-end p-3">محصولات</h4>
+                    <div class="container">
+                        <div class="row justify-content-start cat-row">
+                            <div class="col-8">
+                                <select class="form-select no-arrows custom-placeholder" id="productCategory" placeholder="انتخاب">
+                                    <option value="">انتخاب دسته</option>
+                                    <option value="category1">دسته ۱</option>
+                                    <option value="category2">دسته ۲</option>
+                                    <option value="category3">دسته ۳</option>
+                                </select>
+                            </div>
+                            <div class="col-4">
+                                <label for="productCategory" class="form-label"></label>
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-center">
+                            <button class="btn btn-search" onclick="applyFilters()">جست و جو</button>
+                            <button class="btn btn-clear" onclick="clearFilters()">حذف فیلترها</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Table to display filtered data -->
+                <table class="table table-bordered mt-5" id="productTable">
+                    <thead>
+                        <tr>
+                            <th>نام محصول</th>
+                            <th>دسته</th>
+                            <th>قیمت</th>
+                            <th>تخفیف</th>
+                            <th>امتیاز بهترین فروشنده</th>
+                            <th>رقبا</th>
+                            <th>نظرات</th>
+                            <th>پرسش‌ها</th>
+                            <th>فروش</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productTableBody">
+                        <!-- Rows will be added dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional: jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Mock data
+        const products = [
+            { name: 'محصول ۱', category: 'دسته ۱', price: 20000, discount: 10, bestSellerScore: 4.5, competitors: 5, reviews: 100, questions: 10, sales: 200 },
+            { name: 'محصول ۲', category: 'دسته ۲', price: 50000, discount: 20, bestSellerScore: 4.8, competitors: 3, reviews: 150, questions: 15, sales: 500 },
+            { name: 'محصول ۳', category: 'دسته ۱', price: 30000, discount: 15, bestSellerScore: 4.3, competitors: 4, reviews: 80, questions: 5, sales: 300 },
+            { name: 'محصول ۴', category: 'دسته ۳', price: 40000, discount: 5, bestSellerScore: 4.0, competitors: 2, reviews: 60, questions: 8, sales: 150 },
+            { name: 'محصول ۵', category: 'دسته ۲', price: 15000, discount: 25, bestSellerScore: 4.7, competitors: 6, reviews: 120, questions: 12, sales: 450 }
+        ];
+
+        // Function to apply filters
+        function applyFilters() {
+            const category = document.getElementById('productCategory').value;
+            const priceMin = document.getElementById('priceMin').value;
+            const priceMax = document.getElementById('priceMax').value;
+            const discountMin = document.getElementById('discountMin').value;
+            const discountMax = document.getElementById('discountMax').value;
+            const bestSellerMin = document.getElementById('bestSellerMin').value;
+            const bestSellerMax = document.getElementById('bestSellerMax').value;
+            const competitorsMin = document.getElementById('competitorsMin').value;
+            const competitorsMax = document.getElementById('competitorsMax').value;
+            const reviewsMin = document.getElementById('reviewsMin').value;
+            const reviewsMax = document.getElementById('reviewsMax').value;
+            const questionsMin = document.getElementById('questionsMin').value;
+            const questionsMax = document.getElementById('questionsMax').value;
+            const salesMin = document.getElementById('salesMin').value;
+            const salesMax = document.getElementById('salesMax').value;
+
+            // Filter the products based on the inputs
+            const filteredProducts = products.filter(product => {
+                return (!category || product.category === category) &&
+                       (!priceMin || product.price >= priceMin) &&
+                       (!priceMax || product.price <= priceMax) &&
+                       (!discountMin || product.discount >= discountMin) &&
+                       (!discountMax || product.discount <= discountMax) &&
+                       (!bestSellerMin || product.bestSellerScore >= bestSellerMin) &&
+                       (!bestSellerMax || product.bestSellerScore <= bestSellerMax) &&
+                       (!competitorsMin || product.competitors >= competitorsMin) &&
+                       (!competitorsMax || product.competitors <= competitorsMax) &&
+                       (!reviewsMin || product.reviews >= reviewsMin) &&
+                       (!reviewsMax || product.reviews <= reviewsMax) &&
+                       (!questionsMin || product.questions >= questionsMin) &&
+                       (!questionsMax || product.questions <= questionsMax) &&
+                       (!salesMin || product.sales >= salesMin) &&
+                       (!salesMax || product.sales <= salesMax);
+            });
+
+            // Display the filtered products in the table
+            const tableBody = document.getElementById('productTableBody');
+            tableBody.innerHTML = ''; // Clear previous results
+
+            filteredProducts.forEach(product => {
+                const row = `<tr>
+                    <td>${product.name}</td>
+                    <td>${product.category}</td>
+                    <td>${product.price}</td>
+                    <td>${product.discount}%</td>
+                    <td>${product.bestSellerScore}</td>
+                    <td>${product.competitors}</td>
+                    <td>${product.reviews}</td>
+                    <td>${product.questions}</td>
+                    <td>${product.sales}</td>
+                </tr>`;
+                tableBody.innerHTML += row;
+            });
+
+            // Show the table if there are results
+            document.getElementById('productTable').style.display = filteredProducts.length ? 'table' : 'none';
+        }
+
+        // Function to clear filters
+        function clearFilters() {
+            document.getElementById('productCategory').value = '';
+            document.getElementById('priceMin').value = '';
+            document.getElementById('priceMax').value = '';
+            document.getElementById('discountMin').value = '';
+            document.getElementById('discountMax').value = '';
+            document.getElementById('bestSellerMin').value = '';
+            document.getElementById('bestSellerMax').value = '';
+            document.getElementById('competitorsMin').value = '';
+            document.getElementById('competitorsMax').value = '';
+            document.getElementById('reviewsMin').value = '';
+            document.getElementById('reviewsMax').value = '';
+            document.getElementById('questionsMin').value = '';
+            document.getElementById('questionsMax').value = '';
+            document.getElementById('salesMin').value = '';
+            document.getElementById('salesMax').value = '';
+
+            // Clear table results
+            document.getElementById('productTableBody').innerHTML = '';
+            document.getElementById('productTable').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
